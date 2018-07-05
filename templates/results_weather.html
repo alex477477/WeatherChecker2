@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles.css') }}">
+</link>
+
+</head>
+<body>
+<script lang="javascript">
+  var backgroundlink = "url({{backgroundlink}})";
+  document.body.style.backgroundImage = backgroundlink;
+</script>
+<h2 class ="sanserif">The Temp in {{city}} is: </h2>
+<p> {{temp}} </p>
+
+{{ summaryOfCity | safe }}
+
+<a href='/'>back</a><br/>
+
+
+</body>
+</html>
