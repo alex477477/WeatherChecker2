@@ -8,15 +8,12 @@ app = Flask(__name__)
 def homepage():
     return render_template("homepage_weather.html")
 
-
-@app.route('/temp')
-def temp():
-    city = str(request.args.get('city'))
-    response = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" + str(city) + "&APPID=c38019c217f2038ea26bcef66f597bb1&units=metric")
-    weather = response.json()
-    response2 =requests.get("https://api.teleport.org/api/urban_areas/slug:" + str(city) + "/scores/")
+@app.route('/description')
+def description():
+    city = str(request.args.get('city')).lower()
+    city2 = city.replace(" ", "-")
+    response2 =requests.get("https://api.teleport.org/api/urban_areas/slug:" + str(city2) + "/scores/")
     scores = response2.json()
-    
 
     if 'status' in scores.keys():
         
@@ -28,10 +25,48 @@ def temp():
     else:
         print('HERE3')
         summaryOfCity = scores['summary']
+
+    return render_template("html_fordescription.html", city = city, summaryOfCity = summaryOfCity)
+
+
+@app.route('/temp')
+def temp():  
+    city = str(request.args.get('city')).lower()
+    #city2 = city.replace(" ", "-")
+    
+    print ("CITY is now")
+    print (city)
+    response = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" + str(city) + "&APPID=c38019c217f2038ea26bcef66f597bb1&units=metric")
+    weather = response.json()
+    #response2 =requests.get("https://api.teleport.org/api/urban_areas/slug:" + str(city2) + "/scores/")
+    #scores = response2.json()
+    
+
+
+
+    #response = requests.get("http://api.openweathermap.org/data/2.5/weather?q=" + str(city) + "&APPID=c38019c217f2038ea26bcef66f597bb1&units=metric")
+    #weather = response.json()
+    #response2 =requests.get("https://api.teleport.org/api/urban_areas/slug:" + str(city) + "/scores/")
+    #scores = response2.json()
+        
+    #print('START')
+    #print(response2)
+    #print('END')
+
+    #if 'status' in scores.keys():
+        
+        #if scores['status'] == 404:
+            #print('HERE2')
+            #summaryOfCity = "<p> no description </p>"
+        
+        
+   # else:
+        #print('HERE3')
+        #summaryOfCity = scores['summary']
     
         
-    print('START')
-    print(type(weather['cod']))
+    #print('START')
+    #print(type(weather['cod']))
 
 
 
@@ -39,10 +74,10 @@ def temp():
         temp = 'unknown'
         backgroundlink = 'https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252__340.jpg'
     else:
-        print('here')
+        #print('here')
         temp = str(weather['main']['temp'])
         temp_float = float(weather['main']['temp'])
-        if temp_float >= 40.0:
+        if temp_float >= 35.0:
             backgroundlink = "https://images.unsplash.com/photo-1527181617732-cd814bc53892?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=65d56247536cc2acd48bf97ca7660a89&w=1000&q=80"
         elif temp_float >= 25.0:
             backgroundlink = "https://media.istockphoto.com/photos/art-summer-vacation-ocean-beach-picture-id510152502?k=6&m=510152502&s=612x612&w=0&h=dBUs641JFQv3yCxWRnFqG23k_atj7CHu7NxoT29Z2Y4="
@@ -59,7 +94,12 @@ def temp():
     
     #returnStr = "<a href='/'>back</a><br/>"
     #returnStr = returnStr + temp
-    return render_template("results_weather.html", city = city, temp = temp, backgroundlink = backgroundlink, summaryOfCity = summaryOfCity)
+    return render_template("results_weather.html", city = city, temp = temp, backgroundlink = backgroundlink)
+
+
+    
+    
+
 
 if __name__ == "__main__":
           app.run(debug=True, port = 5000)

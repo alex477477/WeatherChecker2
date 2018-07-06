@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'styles_fordescription.css') }}">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+
+<header>
+  <h2>About {{ city}}</h2>
+</header>
+
+<section>
+  <nav>
+    <ul>
+	  <li><strong>Description</strong></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/temp">Temp</a></li>
+      
+    </ul>
+  </nav>
+  
+  <article>
+    <h1>{{ city}}</h1>
+    <p>{{ summaryOfCity | safe}}</p>
+  </article>
+</section>
+
+<footer>
+  <p>Footer</p>
+</footer>
+
+</body>
+</html>
