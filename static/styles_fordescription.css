@@ -19,7 +19,7 @@ header {
 nav {
     float: left;
     width: 30%;
-    height: 700px;
+    height: 500px;
     background: #ccc;
     padding: 20px;
 }
@@ -34,7 +34,7 @@ article {
     float: left;
     padding: 20px;
     width: 70%;
-	height: 700px;
+	height: 500px;
     background-color: #f1f1f1;
     
 }
